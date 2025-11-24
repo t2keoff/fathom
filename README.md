@@ -26,11 +26,20 @@ Spring example config
 
 ```yaml
 spring:
+  application:
+    name: fathom-demo
   data:
     mongodb:
       auto-index-creation: true
-      uri: mongodb://localhost:27017/demo
+      uri: mongodb://localhost:27017/fathom-demo
+  cloud:
+    zookeeper:
+      config:
+        import-check:
+          enabled: false
 fathom:
+  retryTimes: 0
+  use-parallel-streams: true
   process-at-once: 150
   processingStaleAfter: PT1M
   worker:
