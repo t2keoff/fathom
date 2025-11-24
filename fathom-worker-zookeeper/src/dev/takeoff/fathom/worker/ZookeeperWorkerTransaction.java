@@ -1,6 +1,6 @@
 package dev.takeoff.fathom.worker;
 
-import static dev.takeoff.fathom.worker.ZookeeperUtils.GLOBAL_LOCK_PATH;
+import static dev.takeoff.fathom.worker.ZookeeperWorkerUtils.GLOBAL_LOCK_PATH;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;

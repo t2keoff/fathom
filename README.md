@@ -14,6 +14,9 @@ dependencies {
 
     // only mongo is supported at the moment
     implementation("dev.takeoff.fathom:mongo:1.0.0")
+
+    // for zookeeper worker strategy or add default in-memory strategy
+    implementation("dev.takeoff.fathom:worker-zookeeper:1.0")
 }
 ```
 

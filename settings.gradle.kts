@@ -5,6 +5,7 @@ plugins {
 rootProject.name = "fathom"
 
 include(":fathom-common")
-include(":fathom-common-zookeeper")
+include(":fathom-worker-common")
+include(":fathom-worker-zookeeper")
 include(":fathom-mongo")
 include(":fathom-demo")

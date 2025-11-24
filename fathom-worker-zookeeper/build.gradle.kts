@@ -6,10 +6,10 @@ plugins {
 }
 
 dependencies {
-    api(project(":fathom-common"))
+    api(project(":fathom-worker-common"))
     api("org.springframework.cloud:spring-cloud-starter-zookeeper-config")
 }
 
 fathomPublish {
-    artifactId = "common-zookeeper"
+    artifactId = "worker-zookeeper"
 }
