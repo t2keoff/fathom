@@ -3,7 +3,7 @@ package dev.takeoff.fathom.entity;
 import java.util.Collection;
 import java.util.stream.Stream;
 
-public interface FathomEntityStore<ID, ENTITY extends FathomEntity<ID, ENTITY>> {
+public interface FathomEntityStore<ENTITY extends FathomEntity<ENTITY>> {
 
   Stream<ENTITY> retrieveAwaitingEntities();
 

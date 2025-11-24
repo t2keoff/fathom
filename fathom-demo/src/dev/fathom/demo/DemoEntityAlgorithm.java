@@ -5,7 +5,7 @@ import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-final class DemoEntityAlgorithm implements FathomAlgorithm<String, DemoEntity> {
+final class DemoEntityAlgorithm implements FathomAlgorithm<DemoEntity> {
 
   private static final Logger log = LoggerFactory.getLogger(DemoEntityAlgorithm.class);
 

@@ -9,20 +9,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 
-public abstract class FathomWorker<ID, ENTITY extends FathomEntity<ID, ENTITY>> {
+public abstract class FathomWorker<ENTITY extends FathomEntity<ENTITY>> {
 
   private static final Logger log = LoggerFactory.getLogger(FathomWorker.class);
 
   private final FathomProperties properties;
   private final FathomWorkerStrategy workerStrategy;
-  private final FathomAlgorithm<ID, ENTITY> algorithm;
-  private final FathomEntityStore<ID, ENTITY> entityStore;
+  private final FathomAlgorithm<ENTITY> algorithm;
+  private final FathomEntityStore<ENTITY> entityStore;
 
   protected FathomWorker(
       final FathomProperties properties,
       final FathomWorkerStrategy workerStrategy,
-      final FathomAlgorithm<ID, ENTITY> algorithm,
-      final FathomEntityStore<ID, ENTITY> entityStore) {
+      final FathomAlgorithm<ENTITY> algorithm,
+      final FathomEntityStore<ENTITY> entityStore) {
     this.algorithm = algorithm;
     this.properties = properties;
     this.entityStore = entityStore;

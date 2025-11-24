@@ -4,8 +4,8 @@ import java.time.Instant;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-public abstract class AbstractFathomEntity<ID, ENTITY extends AbstractFathomEntity<ID, ENTITY>>
-    implements FathomEntity<ID, ENTITY> {
+public abstract class AbstractFathomEntity<ENTITY extends AbstractFathomEntity<ENTITY>>
+    implements FathomEntity<ENTITY> {
 
   @Indexed @Field protected boolean requiresProcessing;
   @Indexed @Field protected Instant lastProcessedAt;

@@ -16,7 +16,7 @@ public record ImmutableDemoEntity(
     @Indexed @Field long hotScore,
     @Indexed @Field boolean requiresProcessing,
     @Indexed @Field Instant lastProcessedAt)
-    implements FathomEntity<String, ImmutableDemoEntity> {
+    implements FathomEntity<ImmutableDemoEntity> {
 
   public ImmutableDemoEntity increaseWeight(final long delta) {
     return new ImmutableDemoEntity(

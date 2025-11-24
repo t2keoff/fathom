@@ -4,7 +4,7 @@ import dev.takeoff.fathom.FathomProperties;
 import dev.takeoff.fathom.worker.FathomWorker;
 import dev.takeoff.fathom.worker.FathomWorkerStrategy;
 
-final class DemoEntityWorker extends FathomWorker<String, DemoEntity> {
+final class DemoEntityWorker extends FathomWorker<DemoEntity> {
 
   DemoEntityWorker(
       final FathomProperties properties,

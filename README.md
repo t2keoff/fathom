@@ -42,7 +42,7 @@ Example entity
 ```java
 
 @Document(collection = "demo_entities")
-public class DemoEntity extends AbstractFathomEntity<String, DemoEntity> {
+public class DemoEntity extends AbstractFathomEntity<DemoEntity> {
 
   @MongoId
   private String id;
@@ -97,7 +97,7 @@ public class DemoEntity extends AbstractFathomEntity<String, DemoEntity> {
 Example algorithm
 
 ```java
-final class DemoEntityAlgorithm implements FathomAlgorithm<String, DemoEntity> {
+final class DemoEntityAlgorithm implements FathomAlgorithm<DemoEntity> {
 
   // @Override
   // public DemoEntity process(final DemoEntity entity) {
@@ -129,7 +129,7 @@ final class DemoEntityAlgorithm implements FathomAlgorithm<String, DemoEntity> {
 Example worker
 
 ```java
-final class DemoEntityWorker extends FathomWorker<String, DemoEntity> {
+final class DemoEntityWorker extends FathomWorker<DemoEntity> {
 
   DemoEntityWorker(
       final FathomProperties properties,
@@ -144,7 +144,7 @@ final class DemoEntityWorker extends FathomWorker<String, DemoEntity> {
 Example store
 
 ```java
-public final class DemoEntityStore extends MongoEntityStore<String, DemoEntity> {
+public final class DemoEntityStore extends MongoEntityStore<DemoEntity> {
 
   DemoEntityStore(final FathomProperties properties, final MongoTemplate mongoTemplate) {
     super(DemoEntity.class, properties, mongoTemplate);
@@ -210,7 +210,7 @@ public record ImmutableDemoEntity(
     @Indexed @Field long hotScore,
     @Indexed @Field boolean requiresProcessing,
     @Indexed @Field Instant lastProcessedAt)
-    implements FathomEntity<String, ImmutableDemoEntity> {
+    implements FathomEntity<ImmutableDemoEntity> {
 
   public ImmutableDemoEntity increaseWeight(final long delta) {
     return new ImmutableDemoEntity(

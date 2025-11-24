@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @Document(collection = "demo_entities")
-public class DemoEntity extends AbstractFathomEntity<String, DemoEntity> {
+public class DemoEntity extends AbstractFathomEntity<DemoEntity> {
 
   @MongoId private String id;
   @Field private long likes;
@@ -19,7 +19,6 @@ public class DemoEntity extends AbstractFathomEntity<String, DemoEntity> {
     super();
   }
 
-  @Override
   public String id() {
     return id;
   }

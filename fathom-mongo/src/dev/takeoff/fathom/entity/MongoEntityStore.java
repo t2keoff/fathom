@@ -10,8 +10,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-public class MongoEntityStore<ID, ENTITY extends FathomEntity<ID, ENTITY>>
-    implements FathomEntityStore<ID, ENTITY> {
+public class MongoEntityStore<ENTITY extends FathomEntity<ENTITY>>
+    implements FathomEntityStore<ENTITY> {
 
   private final Class<ENTITY> entityType;
   private final FathomProperties properties;

@@ -2,9 +2,7 @@ package dev.takeoff.fathom.entity;
 
 import java.time.Instant;
 
-public interface FathomEntity<ID, ENTITY extends FathomEntity<ID, ENTITY>> {
-
-  ID id();
+public interface FathomEntity<ENTITY extends FathomEntity<ENTITY>> {
 
   Instant lastProcessedAt();
 
