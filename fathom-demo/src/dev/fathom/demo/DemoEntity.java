@@ -12,29 +12,23 @@ public class DemoEntity extends AbstractFathomEntity<String, DemoEntity> {
   @MongoId private String id;
   @Field private long likes;
   @Field private long comments;
-  @Field private Long weight;
-  @Indexed @Field private Long hotScore;
+  @Field private long weight;
+  @Indexed @Field private long hotScore;
 
   public DemoEntity() {
     super();
-    weight = 0L;
-    hotScore = weight;
   }
 
   @Override
-  public String getId() {
+  public String id() {
     return id;
   }
 
-  public DemoEntity setId(final String id) {
+  public void id(final String id) {
     this.id = id;
-    return this;
   }
 
   public DemoEntity increaseWeight(final long delta) {
-    if (weight == null) {
-      weight = 0L;
-    }
     weight += delta;
     return this;
   }
@@ -54,28 +48,28 @@ public class DemoEntity extends AbstractFathomEntity<String, DemoEntity> {
     return this;
   }
 
-  public Long getHotScore() {
+  public long hotScore() {
     return hotScore;
   }
 
-  public DemoEntity setHotScore(final Long hotScore) {
+  public DemoEntity hotScore(final long hotScore) {
     this.hotScore = hotScore;
     return this;
   }
 
-  public long getLikes() {
+  public long likes() {
     return likes;
   }
 
-  public long getComments() {
+  public long comments() {
     return comments;
   }
 
-  public Long getWeight() {
+  public long weight() {
     return weight;
   }
 
-  public DemoEntity setWeight(final Long weight) {
+  public DemoEntity weight(final long weight) {
     this.weight = weight;
     return this;
   }

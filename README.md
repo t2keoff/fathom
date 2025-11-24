@@ -48,26 +48,25 @@ public class DemoEntity extends AbstractFathomEntity<String, DemoEntity> {
   @Field
   private long comments;
   @Field
-  private Long weight;
+  private long weight;
   @Indexed
   @Field
-  private final Long hotScore;
+  private long hotScore;
 
   public DemoEntity() {
     super();
-    weight = 0L;
-    hotScore = weight;
   }
 
   @Override
-  public String getId() {
+  public String id() {
     return id;
   }
 
+  public void id(final String id) {
+    this.id = id;
+  }
+
   public DemoEntity increaseWeight(final long delta) {
-    if (weight == null) {
-      weight = 0L;
-    }
     weight += delta;
     return this;
   }
@@ -80,6 +79,11 @@ public class DemoEntity extends AbstractFathomEntity<String, DemoEntity> {
   public DemoEntity increaseComments(final long delta) {
     this.comments += delta;
     return increaseWeight(5);
+  }
+
+  public DemoEntity markAsToProcess() {
+    this.requiresProcessing = true;
+    return this;
   }
 
   // ... getters and setters below
@@ -105,16 +109,16 @@ final class DemoEntityAlgorithm implements FathomAlgorithm<String, DemoEntity> {
 
   @Override
   public DemoEntity process(final DemoEntity entity) {
-    final Instant now = Instant.now(), lastProcessedAt = entity.getLastProcessedAt();
+    final Instant now = Instant.now(), lastProcessedAt = entity.lastProcessedAt();
 
-    final long weight = entity.getWeight(),
+    final long weight = entity.weight(),
         daysSinceLastProcessed =
             lastProcessedAt == null
                 ? 0
                 : Math.max(0, now.getEpochSecond() - lastProcessedAt.getEpochSecond()) / 86400,
         hotScore = weight / (1 + daysSinceLastProcessed);
 
-    return entity.setHotScore(hotScore).markAsProcessed();
+    return entity.hotScore(hotScore).markAsProcessed();
   }
 }
 ```
@@ -122,22 +126,128 @@ final class DemoEntityAlgorithm implements FathomAlgorithm<String, DemoEntity> {
 Example worker
 
 ```java
-final class DemoEntityWorker extends MongoFathomWorker<String, DemoEntity> {
-
-  private final DemoEntityRepository repository;
+final class DemoEntityWorker extends FathomWorker<String, DemoEntity> {
 
   DemoEntityWorker(
+      final FathomProperties properties,
+      final FathomWorkerStrategy workerStrategy,
       final DemoEntityAlgorithm algorithm,
-      final DemoEntityRepository repository,
-      final MongoTemplate mongoTemplate,
-      final FathomProperties properties) {
-    super(DemoEntity.class, algorithm, mongoTemplate, properties);
-    this.repository = repository;
+      final DemoEntityStore entityStore) {
+    super(properties, workerStrategy, algorithm, entityStore);
+  }
+}
+```
+
+Example store
+
+```java
+final class DemoEntityStore extends MongoEntityStore<String, DemoEntity> {
+
+  DemoEntityStore(final FathomProperties properties, final MongoTemplate mongoTemplate) {
+    super(DemoEntity.class, properties, mongoTemplate);
+  }
+}
+```
+
+Example configuration
+
+```java
+
+@Configuration
+@EnableMongoFathom
+class DemoEntityConfiguration {
+
+  DemoEntityConfiguration() {
+  }
+
+  @Bean
+  FathomWorkerStrategy workerStrategy(final CuratorFramework curatorFramework) {
+    return new ZookeeperWorkerStrategy(curatorFramework);
+  }
+
+  @Bean
+  DemoEntityAlgorithm demoEntityAlgorithm() {
+    return new DemoEntityAlgorithm();
+  }
+
+  @Bean
+  DemoEntityStore demoEntityStore(
+      final FathomProperties properties, final MongoTemplate mongoTemplate) {
+    return new DemoEntityStore(properties, mongoTemplate);
+  }
+
+  @Bean
+  DemoEntityWorker demoEntityWorker(
+      final FathomProperties properties,
+      final FathomWorkerStrategy workerStrategy,
+      final DemoEntityAlgorithm algorithm,
+      final DemoEntityStore entityStore) {
+    return new DemoEntityWorker(properties, workerStrategy, algorithm, entityStore);
+  }
+}
+```
+
+Example immutable entity
+
+```java
+
+@Document(collection = "demo_entities")
+public record ImmutableDemoEntity(
+    @MongoId String id,
+    @Field long likes,
+    @Field long comments,
+    @Field long weight,
+    @Indexed @Field long hotScore,
+    @Indexed @Field boolean requiresProcessing,
+    @Indexed @Field Instant lastProcessedAt)
+    implements FathomEntity<String, ImmutableDemoEntity> {
+
+  public ImmutableDemoEntity increaseWeight(final long delta) {
+    return new ImmutableDemoEntity(
+        id, likes, comments, weight + delta, hotScore, requiresProcessing, lastProcessedAt);
+  }
+
+  public ImmutableDemoEntity increaseLikes(final long delta) {
+    return new ImmutableDemoEntity(
+        id, likes + delta, comments, weight + delta, hotScore, requiresProcessing, lastProcessedAt);
+  }
+
+  public ImmutableDemoEntity increaseComments(final long delta) {
+    return new ImmutableDemoEntity(
+        id,
+        likes,
+        comments + delta,
+        weight + delta * 3,
+        hotScore,
+        requiresProcessing,
+        lastProcessedAt);
+  }
+
+  public ImmutableDemoEntity hotScore(final Long hotScore) {
+    return new ImmutableDemoEntity(
+        id, likes, comments, weight, hotScore, requiresProcessing, lastProcessedAt);
+  }
+
+  public ImmutableDemoEntity weight(final Long weight) {
+    return new ImmutableDemoEntity(
+        id, likes, comments, weight, hotScore, requiresProcessing, lastProcessedAt);
   }
 
   @Override
-  protected void saveEntities(final Set<DemoEntity> demoEntities) {
-    repository.saveAll(demoEntities);
+  public ImmutableDemoEntity lastProcessedAt(final Instant lastProcessedAt) {
+    return new ImmutableDemoEntity(
+        id, likes, comments, weight, hotScore, requiresProcessing, lastProcessedAt);
+  }
+
+  @Override
+  public ImmutableDemoEntity requiresProcessing(final boolean requiresProcessing) {
+    return new ImmutableDemoEntity(
+        id, likes, comments, weight, hotScore, requiresProcessing, lastProcessedAt);
+  }
+
+  @Override
+  public ImmutableDemoEntity markAsProcessed() {
+    return new ImmutableDemoEntity(id, likes, comments, weight, hotScore, false, Instant.now());
   }
 }
 ```

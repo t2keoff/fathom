@@ -4,15 +4,15 @@ import java.time.Instant;
 
 public interface FathomEntity<ID, ENTITY extends FathomEntity<ID, ENTITY>> {
 
-  ID getId();
+  ID id();
 
-  Instant getLastProcessedAt();
+  Instant lastProcessedAt();
 
-  ENTITY setLastProcessedAt(Instant lastProcessedAt);
+  ENTITY lastProcessedAt(Instant lastProcessedAt);
 
-  Boolean getRequiresProcessing();
+  boolean requiresProcessing();
 
-  ENTITY setRequiresProcessing(Boolean requiresProcessing);
+  ENTITY requiresProcessing(boolean requiresProcessing);
 
   ENTITY markAsProcessed();
 }

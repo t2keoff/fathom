@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public abstract class AbstractFathomEntity<ID, ENTITY extends AbstractFathomEntity<ID, ENTITY>>
     implements FathomEntity<ID, ENTITY> {
 
-  @Indexed @Field protected Boolean requiresProcessing;
+  @Indexed @Field protected boolean requiresProcessing;
   @Indexed @Field protected Instant lastProcessedAt;
 
   protected AbstractFathomEntity() {
@@ -16,23 +16,23 @@ public abstract class AbstractFathomEntity<ID, ENTITY extends AbstractFathomEnti
   }
 
   @Override
-  public Boolean getRequiresProcessing() {
+  public boolean requiresProcessing() {
     return requiresProcessing;
   }
 
   @Override
-  public ENTITY setRequiresProcessing(final Boolean requiresProcessing) {
+  public ENTITY requiresProcessing(final boolean requiresProcessing) {
     this.requiresProcessing = requiresProcessing;
     return touchForProcessing();
   }
 
   @Override
-  public Instant getLastProcessedAt() {
+  public Instant lastProcessedAt() {
     return lastProcessedAt;
   }
 
   @Override
-  public ENTITY setLastProcessedAt(final Instant lastProcessedAt) {
+  public ENTITY lastProcessedAt(final Instant lastProcessedAt) {
     this.lastProcessedAt = lastProcessedAt;
     return touchForProcessing();
   }
