@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: fathom-demo
+  data:
+    mongodb:
+      auto-index-creation: true
+      uri: mongodb://localhost:27017/fathom-demo
+fathom:
+  process-at-once: 150
+  processingStaleAfter: PT1M
+  worker:
+    fixed-rate: PT10S
