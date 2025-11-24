@@ -4,6 +4,7 @@ import dev.takeoff.fathom.FathomProperties;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -23,6 +24,13 @@ public class MongoEntityStore<ID, ENTITY extends FathomEntity<ID, ENTITY>>
     this.entityType = entityType;
     this.properties = properties;
     this.mongoTemplate = mongoTemplate;
+  }
+
+  public Stream<ENTITY> retrieve(final UnaryOperator<Query> queryOperator) {
+    final var query = new Query(Criteria.where("requiresProcessing").is(false));
+
+    final List<ENTITY> entities = mongoTemplate.find(queryOperator.apply(query), entityType);
+    return properties.useParallelStreams() ? entities.parallelStream() : entities.stream();
   }
 
   @Override

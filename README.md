@@ -144,10 +144,17 @@ final class DemoEntityWorker extends FathomWorker<String, DemoEntity> {
 Example store
 
 ```java
-final class DemoEntityStore extends MongoEntityStore<String, DemoEntity> {
+public final class DemoEntityStore extends MongoEntityStore<String, DemoEntity> {
 
   DemoEntityStore(final FathomProperties properties, final MongoTemplate mongoTemplate) {
     super(DemoEntity.class, properties, mongoTemplate);
+  }
+
+  public Stream<DemoEntity> retrieveViral(final int page) { // custom query example
+    return retrieve(
+        query -> query
+            // you can add custom criteria here .addCriteria(Criteria.where("someField").is(someValue))
+            .with(PageRequest.of(page, 50, Sort.by("viralScore").descending())));
   }
 }
 ```
