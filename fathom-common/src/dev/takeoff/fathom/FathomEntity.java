@@ -1,4 +1,4 @@
-package dev.takeoff.fathom.entity;
+package dev.takeoff.fathom;
 
 import java.time.Instant;
 

@@ -1,7 +1,7 @@
 package dev.fathom.demo;
 
 import dev.takeoff.fathom.FathomProperties;
-import dev.takeoff.fathom.entity.MongoEntityStore;
+import dev.takeoff.fathom.MongoEntityStore;
 import java.util.stream.Stream;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

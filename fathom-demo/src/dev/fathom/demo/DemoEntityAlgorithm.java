@@ -1,6 +1,6 @@
 package dev.fathom.demo;
 
-import dev.takeoff.fathom.alghoritm.FathomAlgorithm;
+import dev.takeoff.fathom.FathomAlgorithm;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,4 @@
-package dev.takeoff.fathom.alghoritm;
-
-import dev.takeoff.fathom.entity.FathomEntity;
+package dev.takeoff.fathom;
 
 @FunctionalInterface
 public interface FathomAlgorithm<ENTITY extends FathomEntity<ENTITY>> {

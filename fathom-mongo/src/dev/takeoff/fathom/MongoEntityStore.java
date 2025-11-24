@@ -1,6 +1,5 @@
-package dev.takeoff.fathom.entity;
+package dev.takeoff.fathom;
 
-import dev.takeoff.fathom.FathomProperties;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;

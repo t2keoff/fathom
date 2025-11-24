@@ -1,6 +1,6 @@
 package dev.fathom.demo;
 
-import dev.takeoff.fathom.entity.AbstractFathomEntity;
+import dev.takeoff.fathom.AbstractFathomEntity;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;

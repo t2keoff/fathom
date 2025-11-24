@@ -1,4 +1,4 @@
-package dev.takeoff.fathom.entity;
+package dev.takeoff.fathom;
 
 import java.util.Collection;
 import java.util.stream.Stream;

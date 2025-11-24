@@ -1,9 +1,9 @@
 package dev.takeoff.fathom.worker;
 
+import dev.takeoff.fathom.FathomAlgorithm;
+import dev.takeoff.fathom.FathomEntity;
+import dev.takeoff.fathom.FathomEntityStore;
 import dev.takeoff.fathom.FathomProperties;
-import dev.takeoff.fathom.alghoritm.FathomAlgorithm;
-import dev.takeoff.fathom.entity.FathomEntity;
-import dev.takeoff.fathom.entity.FathomEntityStore;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
