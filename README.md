@@ -37,63 +37,6 @@ fathom:
     fixed-rate: PT10S
 ```
 
-Example entity
-
-```java
-
-@Document(collection = "demo_entities")
-public class DemoEntity extends AbstractFathomEntity<DemoEntity> {
-
-  @MongoId
-  private String id;
-  @Field
-  private long likes;
-  @Field
-  private long comments;
-  @Field
-  private long weight;
-  @Indexed
-  @Field
-  private long hotScore;
-
-  public DemoEntity() {
-    super();
-  }
-
-  @Override
-  public String id() {
-    return id;
-  }
-
-  public void id(final String id) {
-    this.id = id;
-  }
-
-  public DemoEntity increaseWeight(final long delta) {
-    weight += delta;
-    return this;
-  }
-
-  public DemoEntity increaseLikes(final long delta) {
-    this.likes += delta;
-    return increaseWeight(1);
-  }
-
-  public DemoEntity increaseComments(final long delta) {
-    this.comments += delta;
-    return increaseWeight(5);
-  }
-
-  public DemoEntity markAsToProcess() {
-    this.requiresProcessing = true;
-    return this;
-  }
-
-  // ... getters and setters below
-}
-
-```
-
 Example algorithm
 
 ```java
@@ -262,5 +205,61 @@ public record ImmutableDemoEntity(
 }
 ```
 
+Example entity
+
+```java
+
+@Document(collection = "demo_entities")
+public class DemoEntity extends AbstractFathomEntity<DemoEntity> {
+
+  @MongoId
+  private String id;
+  @Field
+  private long likes;
+  @Field
+  private long comments;
+  @Field
+  private long weight;
+  @Indexed
+  @Field
+  private long hotScore;
+
+  public DemoEntity() {
+    super();
+  }
+
+  @Override
+  public String id() {
+    return id;
+  }
+
+  public void id(final String id) {
+    this.id = id;
+  }
+
+  public DemoEntity increaseWeight(final long delta) {
+    weight += delta;
+    return this;
+  }
+
+  public DemoEntity increaseLikes(final long delta) {
+    this.likes += delta;
+    return increaseWeight(1);
+  }
+
+  public DemoEntity increaseComments(final long delta) {
+    this.comments += delta;
+    return increaseWeight(5);
+  }
+
+  public DemoEntity markAsToProcess() {
+    this.requiresProcessing = true;
+    return this;
+  }
+
+  // ... getters and setters below
+}
+
+```
 
 ![Visitor Count](https://visitor-badge.laobi.icu/badge?page_id=t2keoff.fathom)
